@@ -18,7 +18,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className='bg-hero flex flex-col bg-slate-50/50 text-[75%] md:text-[100%]'>
+      <body className='bg-hero flex flex-col bg-slate-50/50 font-sans text-[75%] md:text-[100%]'>
         <Header />
         <main className='min-h-[calc(100dvh-12rem)] flex-1 p-6'>
           {children}
