@@ -10,6 +10,7 @@ import {
   useActionData,
   useFetcher,
   useLoaderData,
+  useRouteError,
 } from '@remix-run/react';
 import SearchIcon from '~/components/icons/SearchIcon';
 
@@ -29,10 +30,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const searchTerm = formData.get('q') as string;
   const searchType = formData.get('queryType') as string;
   const pageNumber = 1;
-
-  if (searchTerm === '') {
-    return json({ error: 'Search term cannot be empty' }, { status: 400 });
-  }
 
   if (searchType === 'name') {
     return redirect(
@@ -103,7 +100,6 @@ export default function Index() {
               <SearchIcon className='size-5' />
             </button>
           </fetcher.Form>
-          {actionData?.error && <p>{actionData.error}</p>}
         </section>
         {isFetching ? (
           <div className='text-center my-12'>
@@ -119,11 +115,11 @@ export default function Index() {
   );
 }
 
-// export const ErrorBoundary = () => {
-//   const error = useRouteError();
-//   return (
-//     <div className='p-6 bg-red-50 text-red-600 border border-red-600 mt-6'>
-//       <p>{error instanceof Error && error.message}</p>
-//     </div>
-//   );
-// };
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+  return (
+    <div className='p-6 bg-red-50 text-red-600 border border-red-600 mt-6'>
+      <p>{error instanceof Error && error.message}</p>
+    </div>
+  );
+};

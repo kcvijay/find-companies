@@ -1,4 +1,6 @@
 import { Link, useLoaderData } from '@remix-run/react';
+import ResultCard from './ResultCard';
+import { Item } from '~/data/types';
 
 export default function AllResults({
   data,
@@ -31,20 +33,8 @@ export default function AllResults({
       </div>
 
       <div className='gap-2 mt-4 h-full overflow-y-auto'>
-        {data.results.map((item: any) => (
-          <Link
-            to={`/search/result?queryType=businessId&businessId=${item.businessId}`}
-            rel='prefetch'
-            key={item.businessId}
-            className='p-4 mb-4 flex flex-col gap-2 bg-slate-50/50 border border-sky-200 shadow hover:bg-slate-100 transition-all'
-          >
-            <span className='inline-block text-xl font-bold text-sky-600'>
-              {item.name}
-            </span>
-            <span className='inline-block font-thin text-sm'>
-              Business ID {item.businessId}
-            </span>
-          </Link>
+        {data.results.map((item: Item) => (
+          <ResultCard key={item.businessId} item={item} />
         ))}
       </div>
       {data.totalResults > 10 && ( // Hide pagination when less than 10 results
@@ -60,7 +50,7 @@ export default function AllResults({
             <div />
           )}
 
-          {currentPage !== totalPages && (
+          {currentPage !== totalPages && ( // Hide next button when on last page
             <Link
               to={`?queryType=${queryType}&name=${name}&page=${nextPage}`}
               className='bg-sky-600 text-white py-2 px-3 border hover:bg-sky-700 transition-all'

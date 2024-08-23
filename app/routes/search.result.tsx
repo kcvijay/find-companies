@@ -1,6 +1,6 @@
 import { LoaderFunction } from '@remix-run/node';
 import { json, useLoaderData, useRouteError } from '@remix-run/react';
-import { getDataFromBusinessId, getDataFromName } from '~/actions/data';
+import { getDataFromBusinessId, getDataFromName } from '~/data/actions';
 import SingleResult from '~/components/SingleResult';
 import AllResults from '~/components/AllResults';
 
@@ -40,8 +40,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   const { data, currentPage, queryType, name } = useLoaderData<typeof loader>();
-
-  console.log(data);
 
   return (
     <div>
